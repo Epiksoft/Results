@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F355E923-A7D8-4643-939C-E0858F96A25A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epiksoft.Result", "src\Epiksoft.Result\Epiksoft.Result.csproj", "{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9} = {F355E923-A7D8-4643-939C-E0858F96A25A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D0DCE5F-E6A3-4532-9771-2539597EB9E9}
+	EndGlobalSection
+EndGlobal

@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Epiksoft.Result;
+namespace Epiksoft.Results;
 
 public class Result
 {

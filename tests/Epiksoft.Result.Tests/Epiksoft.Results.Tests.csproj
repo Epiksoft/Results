@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Epiksoft.Result\Epiksoft.Result.csproj" />
+    <ProjectReference Include="..\..\src\Epiksoft.Result\Epiksoft.Results.csproj" />
   </ItemGroup>
 
 </Project>

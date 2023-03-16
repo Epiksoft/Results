@@ -1,4 +1,4 @@
-﻿namespace Epiksoft.Result;
+﻿namespace Epiksoft.Results;
 
 public sealed class ResultError
 {

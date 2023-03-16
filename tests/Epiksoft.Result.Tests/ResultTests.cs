@@ -44,7 +44,9 @@ public class ResultTests
         string code = "test_message_code";
         string data = "Ali";
 
-        var result = Result.Success(data, message, code, HttpStatusCode.Created);
+        var result = Result.Success(data, message, code)
+            .WithHttpStatusCode(HttpStatusCode.Created);
+
         var objResult = result.ToResponse() is ObjectResult ? (ObjectResult)result.ToResponse() : null;
 
         Assert.Equal(message, result.Message);

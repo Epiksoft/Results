@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F355E923-A7D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epiksoft.Result", "src\Epiksoft.Result\Epiksoft.Result.csproj", "{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5E7989C1-A120-4500-9313-043A2FDA4442}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epiksoft.Result.Tests", "tests\Epiksoft.Result.Tests\Epiksoft.Result.Tests.csproj", "{8EE1671A-87E2-4161-9B88-783601CD713F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +21,17 @@ Global
 		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE1671A-87E2-4161-9B88-783601CD713F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE1671A-87E2-4161-9B88-783601CD713F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE1671A-87E2-4161-9B88-783601CD713F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE1671A-87E2-4161-9B88-783601CD713F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{874F8AD6-B704-46B8-BFBD-74C9DF6AC6A9} = {F355E923-A7D8-4643-939C-E0858F96A25A}
+		{8EE1671A-87E2-4161-9B88-783601CD713F} = {5E7989C1-A120-4500-9313-043A2FDA4442}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1D0DCE5F-E6A3-4532-9771-2539597EB9E9}

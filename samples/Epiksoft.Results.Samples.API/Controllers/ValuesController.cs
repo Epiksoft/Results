@@ -19,4 +19,10 @@ public class ValuesController : ControllerBase
     {
         return await _valuesService.CheckValue(value).ToResponseAsync();
     }
+
+    [HttpGet("data/{value}")]
+    public async Task<IActionResult> GetData(int value)
+    {
+		return await _valuesService.CheckValueData(value).ToResponseAsync();
+	}
 }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Epiksoft.Results.Samples.API.Models;
+using System.Net;
 
 namespace Epiksoft.Results.Samples.API.Services;
 
@@ -25,5 +26,26 @@ public class ValuesManager : IValuesService
         return Result.Success(Enumerable.Range(1, 25).ToList())
             .WithHttpStatusCode(HttpStatusCode.OK)
             .WithMetaData("id", Guid.NewGuid());
+
+
     }
+
+	public Result CheckValueData(int value)
+	{
+        if(value > 100)
+            return Result.Success(new List<DataModel> { new DataModel
+			{
+				InformationId = 23435,
+				Information = "It is a message from model"
+			}}).WithMessage("Base result message").WithCode("base_result_code")
+            .WithMetaData("traceId", Guid.NewGuid())
+            .WithMetaData("date", DateTime.UtcNow)
+            .WithHttpStatusCode(HttpStatusCode.Created);
+
+        return Result.Failure(new DataModel
+        {
+            InformationId = 84534,
+            Information = "It is a failure message from model"
+        }).WithError("Value is lesser than 100", "incorrect_value");
+	}
 }

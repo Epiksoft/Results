@@ -263,7 +263,7 @@ public class Result<TData> : Result
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Result<TData> WithHttpStatusCode(HttpStatusCode httpStatusCode)
     {
         base.WithHttpStatusCode(httpStatusCode);
@@ -271,19 +271,19 @@ public class Result<TData> : Result
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override string ToJson()
     {
         return JsonSerializer.Serialize(this);
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override IActionResult ToResponse()
     {
         return new ObjectResult(this) { StatusCode = (int)HttpStatusCode };
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Result<TData> WithError(params ResultError[] resultErrors)
     {
         base.WithError(resultErrors);
@@ -291,7 +291,7 @@ public class Result<TData> : Result
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Result<TData> WithError(string message, string code)
     {
         base.WithError(message, code);
@@ -299,7 +299,7 @@ public class Result<TData> : Result
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Result<TData> WithMessage(string message)
     {
         base.WithMessage(message);
@@ -307,7 +307,7 @@ public class Result<TData> : Result
         return this;
     }
 
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public override Task<IActionResult> ToResponseAsync()
     {
         return Task.FromResult(ToResponse());

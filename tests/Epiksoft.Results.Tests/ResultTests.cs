@@ -7,7 +7,7 @@ public class ResultTests
 {
 
 	[Fact]
-	public void SuccessWithMessageAndCode_ShouldReturn_HttpStatusCodeOK()
+	public void SuccessWithMessageAndCode_ShouldReturnHttpStatusCodeOK_WhenConvertingActionResult()
 	{
 		string message = "test message";
 		string code = "test_message_code";
@@ -24,7 +24,7 @@ public class ResultTests
 	}
 
 	[Fact]
-	public void FailureWithMessageAndCode_ShouldReturn_HttpStatusCodeBadRequest()
+	public void FailureWithMessageAndCode_ShouldReturnHttpStatusCodeBadRequest_WhenConvertingActionResult()
 	{
 		string message = "test message";
 		string code = "test_message_code";
@@ -42,7 +42,7 @@ public class ResultTests
 
 
 	[Fact]
-	public void SuccessWithMessageAndCodeAndData_ShouldReturn_HttpStatusCodeCreated()
+	public void SuccessWithMessageAndCodeAndData_ShouldReturnHttpStatusCodeCreated_WhenConvertingActionResult()
 	{
 		string message = "test message";
 		string code = "test_message_code";
@@ -64,7 +64,7 @@ public class ResultTests
 	}
 
 	[Fact]
-	public void ResultWithMetaData_ShouldInclude_MetaData()
+	public void ResultWithMetaData_ShouldIncludeMetaData()
 	{
 		var dateTime = DateTime.Now;
 		string key = "dateTime";
@@ -77,7 +77,7 @@ public class ResultTests
 	}
 
 	[Fact]
-	public void ResultWithErrors_ShouldInclude_Errors()
+	public void ResultWithErrors_ShouldIncludeErrors()
 	{
 		string code = "test_code";
 		string message = "test";
@@ -96,5 +96,21 @@ public class ResultTests
 		Assert.False(result.Succeeded);
 		Assert.True(result.Errors?.Any(x => x.Code == code && x.Message == message));
 		Assert.Equal(4, result.Errors?.Count);
+	}
+
+	[Fact]
+	public void FailureWithoutData_ShouldIncludeErrors()
+	{
+		string message = "error message";
+		string code = "error_code";
+
+		var result = Result.Failure<object>(new ResultError(message, code));
+
+		Assert.False(result.Succeeded);
+		Assert.True(result.Failed);
+		Assert.Null(result.Data);
+		Assert.True(result.Errors.Count > 0);
+		Assert.Equal(message, result.Errors.First().Message);
+		Assert.Equal(code, result.Errors.First().Code);
 	}
 }

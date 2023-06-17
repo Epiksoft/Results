@@ -15,14 +15,14 @@ public class ValuesController : ControllerBase
     }
 
     [HttpGet("{value}")]
-    public async Task<IActionResult> Get(int value)
+    public IActionResult Get(int value)
     {
-        return await _valuesService.CheckValue(value).ToResponseAsync();
+        return _valuesService.CheckValue(value).ToResponse();
     }
 
     [HttpGet("data/{value}")]
-    public async Task<IActionResult> GetData(int value)
+    public IActionResult GetData(int value)
     {
-		return await _valuesService.CheckValueData(value).ToResponseAsync();
+		return _valuesService.CheckValueData(value).ToResponse();
 	}
 }

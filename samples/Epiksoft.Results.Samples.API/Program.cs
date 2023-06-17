@@ -1,4 +1,6 @@
 using Epiksoft.Results.Samples.API.Services;
+using Epiksoft.Results;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,27 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IValuesService, ValuesManager>();
+
+builder.Services.AddResultOptions(o =>
+{
+	o.JsonSerializerOptions = new JsonSerializerOptions
+	{
+		PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+	};
+
+	o.MetadataFactory = () =>
+	{
+		var dictionary = new Dictionary<string, object>();
+
+		var serverTime = DateTime.Now;
+		var requestId = Guid.NewGuid();
+
+		dictionary.Add(nameof(serverTime), serverTime);
+		dictionary.Add(nameof(requestId), requestId);
+
+		return dictionary;
+	};
+});
 
 var app = builder.Build();
 

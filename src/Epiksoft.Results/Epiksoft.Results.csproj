@@ -13,7 +13,7 @@
     <Authors>Mehmet Kekeç, Emre Özgenç</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>Ⓒ 2023 Epiksoft</Copyright>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

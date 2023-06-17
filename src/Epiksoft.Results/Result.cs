@@ -207,6 +207,8 @@ public class Result<TData> : Result
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData Data { get; private set; } = default;
+
+    [JsonIgnore]
     public override HttpStatusCode HttpStatusCode
     {
         get

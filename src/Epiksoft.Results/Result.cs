@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -8,6 +7,9 @@ namespace Epiksoft.Results;
 
 public class Result
 {
+    [JsonIgnore]
+    internal static ResultOptions Options { get; set; } = new ResultOptions();
+
     [JsonIgnore]
     public ResultStatus Status { get; }
 
@@ -26,14 +28,14 @@ public class Result
     public IReadOnlyCollection<ResultError> Errors { get => _errors; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IReadOnlyDictionary<string, object> MetaData { get => _metaData; }
+    public IReadOnlyDictionary<string, object> Metadata { get => _metadata; }
 
     [JsonIgnore]
-    public HttpStatusCode HttpStatusCode { get; private set; }
+    public virtual HttpStatusCode HttpStatusCode { get; protected set; }
 
     protected List<ResultError> _errors;
 
-    protected Dictionary<string, object> _metaData;
+    protected Dictionary<string, object> _metadata;
 
     protected Result(ResultStatus status)
     {
@@ -41,6 +43,11 @@ public class Result
 
         HttpStatusCode = status is ResultStatus.Success ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
         Succeeded = status is ResultStatus.Success;
+
+        if (Options.MetadataFactory is not null)
+        {
+            WithMetaData(Options.MetadataFactory());
+        }
     }
 
     #region Result builders
@@ -79,7 +86,9 @@ public class Result
     /// <typeparam name="TData"></typeparam>
     /// <param name="error"></param>
     /// <returns>Created <c>Result</c> object</returns>
-    public static Result<TData> Failure<TData>(ResultError error) => new(ResultStatus.Failure, error);
+    public static Result<TData> Failure<TData>(ResultError error) => new(error, ResultStatus.Failure);
+
+    public static Result<TData> Failure<TData>() => new(ResultStatus.Failure);
 
     #endregion
 
@@ -141,8 +150,8 @@ public class Result
     /// <returns>The object itself</returns>
     public virtual Result WithMetaData(string key, object value)
     {
-        _metaData ??= new();
-        _metaData.Add(key, value);
+        _metadata ??= new();
+        _metadata.Add(key, value);
 
         return this;
     }
@@ -154,7 +163,7 @@ public class Result
     /// <returns>The object itself</returns>
     public virtual Result WithMetaData(Dictionary<string, object> metaData)
     {
-        _metaData = metaData;
+        _metadata = metaData;
 
         return this;
     }
@@ -179,19 +188,13 @@ public class Result
     /// Serializes the result
     /// </summary>
     /// <returns>Serialized Json string</returns>
-    public virtual string ToJson() => JsonSerializer.Serialize(this);
+    public virtual string ToJson() => JsonSerializer.Serialize(this, Options.JsonSerializerOptions);
 
     /// <summary>
     /// Converts the result into <c>IActionResult</c> by http status code
     /// </summary>
     /// <returns>Converted action result</returns>
     public virtual IActionResult ToResponse() => new ObjectResult(this) { StatusCode = (int)HttpStatusCode };
-
-    /// <summary>
-    /// Converts the result into <c>IActionResult</c> by http status code (async)
-    /// </summary>
-    /// <returns>Converted action result (Task)</returns>
-    public virtual Task<IActionResult> ToResponseAsync() => Task.FromResult(ToResponse());
 
     #endregion
 
@@ -202,9 +205,27 @@ public class Result
 
 public class Result<TData> : Result
 {
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public TData Data { get; private set; } = default;
+    public override HttpStatusCode HttpStatusCode
+    {
+        get
+        {
+            if (Options.ReturnNotFoundWhenDataIsNull && Data is null)
+            {
+                return HttpStatusCode.NotFound;
+            }
 
-    internal Result(ResultStatus status, ResultError error) : base(status)
+            return base.HttpStatusCode;
+        }
+    }
+
+    internal Result(ResultStatus status) : base(status)
+    {
+
+    }
+
+    internal Result(ResultError error, ResultStatus status) : base(status)
     {
         _errors ??= new();
         _errors.Add(error);
@@ -240,7 +261,7 @@ public class Result<TData> : Result
     public override Result<TData> WithHttpStatusCode(HttpStatusCode httpStatusCode) => base.WithHttpStatusCode(httpStatusCode) as Result<TData>;
 
     /// <inheritdoc/>
-    public override string ToJson() => JsonSerializer.Serialize(this);
+    public override string ToJson() => JsonSerializer.Serialize(this, Options.JsonSerializerOptions);
 
     /// <inheritdoc/>
     public override IActionResult ToResponse() => new ObjectResult(this) { StatusCode = (int)HttpStatusCode };
@@ -253,9 +274,6 @@ public class Result<TData> : Result
 
     /// <inheritdoc/>
     public override Result<TData> WithMessage(string message) => base.WithMessage(message) as Result<TData>;
-
-    /// <inheritdoc/>
-    public override Task<IActionResult> ToResponseAsync() => Task.FromResult(ToResponse());
 
     public override string ToString() => ToJson();
 }
